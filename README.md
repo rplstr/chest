@@ -1,6 +1,6 @@
 # chest
 
-Single-header C99 testing framework for unit tests with minimal boilerplate.
+Single-header C99 testing framework for unit tests.
 
 
 ## Usage
