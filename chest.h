@@ -17,6 +17,15 @@
  * CHEST_PASS_STR         Text printed on test pass (default: "PASS")
  * CHEST_FAIL_STR         Text printed on test fail (default: "FAIL")
  *
+ * CHEST_DONE_PASS        Text printed for passed tests in summary (default:
+ * PASSED)
+ * CHEST_DONE_FAIL        Text printed for failed tests in summary (default:
+ * FAILED)
+ *
+ * CHEST_SEPARATOR        Separator used between results and summary (default:
+ * "---")
+ *
+ *
  * CHEST_MEASURE          Enable per-test timing (includes <time.h>) if defined
  * CHEST_DEFAULT_TERM_WIDTH Terminal width for alignment (default: 80)
  *
@@ -89,6 +98,17 @@ extern "C" {
 #endif
 #ifndef CHEST_FAIL_STR
 #define CHEST_FAIL_STR "FAIL"
+#endif
+
+#ifndef CHEST_DONE_PASS
+#define CHEST_DONE_PASS "PASSED"
+#endif
+#ifndef CHEST_DONE_FAIL
+#define CHEST_DONE_FAIL "FAILED"
+#endif
+
+#ifndef CHEST_SEPARATOR
+#define CHEST_SEPARATOR "---"
 #endif
 
 /* timing measurement */
@@ -721,9 +741,9 @@ static inline void chest_summary(chest_t *c) {
   if (!c)
     return;
   size_t passed = c->count - c->failures;
-  CHEST_PRINT("---\n");
-  CHEST_PRINT("%zu/%zu PASSED\n", passed, c->count);
-  CHEST_PRINT("%zu FAILED\n", c->failures);
+  CHEST_PRINT("%s\n", CHEST_SEPARATOR);
+  CHEST_PRINT("%zu/%zu %s\n", passed, c->count, CHEST_DONE_PASS);
+  CHEST_PRINT("%zu %s\n", c->failures, CHEST_DONE_FAIL);
   if (c->failures) {
     for (size_t i = 0; i < c->count; ++i) {
       if (!c->results[i]) {
