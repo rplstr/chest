@@ -34,6 +34,10 @@
 #ifndef CHEST_H_
 #define CHEST_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <limits.h>
 #include <math.h>
 #include <stdbool.h>
@@ -730,5 +734,9 @@ static inline void chest_summary(chest_t *c) {
     }
   }
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CHEST_H_ */
