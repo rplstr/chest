@@ -31,8 +31,8 @@
  * CHEST_FREE             Deallocator macro (default: free)
  */
 
-#ifndef CHEST_H
-#define CHEST_H
+#ifndef CHEST_H_
+#define CHEST_H_
 
 #include <limits.h>
 #include <math.h>
@@ -731,4 +731,4 @@ static inline void chest_summary(chest_t *c) {
   }
 }
 
-#endif /* CHEST_H */
+#endif /* CHEST_H_ */
