@@ -4,7 +4,6 @@
  */
 
 /*
- *
  * CHEST_DESC_LT          Text for 'less than' cmp (default: "LESS THAN")
  * CHEST_DESC_LE          Text for 'less/equal' cmp (default: "LESS THAN OR
  * EQUAL TO")
@@ -13,6 +12,8 @@
  * OR EQUAL TO")
  * CHEST_DESC_EQ          Text for 'equal' cmp (default: "EQUAL")
  * CHEST_DESC_NE          Text for 'not equal' cmp (default: "NOT EQUAL")
+ *
+ * CHEST_FALSE_STR        Text for 'false' cmp (default: "FALSE")
  *
  * CHEST_PASS_STR         Text printed on test pass (default: "PASS")
  * CHEST_FAIL_STR         Text printed on test fail (default: "FAIL")
@@ -83,6 +84,10 @@ extern "C" {
    : (op) == CHEST_CMP_EQ ? CHEST_DESC_EQ                                      \
    : (op) == CHEST_CMP_NE ? CHEST_DESC_NE                                      \
                           : "")
+
+#ifndef CHEST_FALSE_STR
+#define CHEST_FALSE_STR "FALSE"
+#endif
 
 #define i8 int8_t
 #define u8 uint8_t
@@ -605,10 +610,12 @@ static inline chest_error_t chest_memeq(chest_t *c, const void *A,
       c->failures++;
       if (c->last_msg)
         CHEST_FREE(c->last_msg);
-      size_t _len =
-          snprintf(NULL, 0, "  %s is false. (%s:%d)\n", expr, file, line) + 1;
+      size_t _len = snprintf(NULL, 0, "  %s is %s. (%s:%d)\n", expr,
+                             CHEST_FALSE_STR, file, line) +
+                    1;
       c->last_msg = (char *)CHEST_MALLOC(_len);
-      snprintf(c->last_msg, _len, "  %s is false. (%s:%d)\n", expr, file, line);
+      snprintf(c->last_msg, _len, "  %s is %s. (%s:%d)\n", expr,
+               CHEST_FALSE_STR, file, line);
     }
   }
 
@@ -671,13 +678,12 @@ static inline chest_error_t chest_streq(chest_t *c, const char *A,
       c->failures++;
       if (c->last_msg)
         CHEST_FREE(c->last_msg);
-      size_t _len =
-          snprintf(NULL, 0, "  '%s' and '%s' are not EQUAL. (%s:%d)\n", A, B,
-                   file, line) +
-          1;
+      size_t _len = snprintf(NULL, 0, "  '%s' and '%s' are %s. (%s:%d)\n", A, B,
+                             CHEST_DESC_NE, file, line) +
+                    1;
       c->last_msg = (char *)CHEST_MALLOC(_len);
-      snprintf(c->last_msg, _len, "  '%s' and '%s' are not EQUAL. (%s:%d)\n", A,
-               B, file, line);
+      snprintf(c->last_msg, _len, "  '%s' and '%s' are %s. (%s:%d)\n", A, B,
+               CHEST_DESC_NE, file, line);
     }
   }
 
