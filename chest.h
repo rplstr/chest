@@ -191,7 +191,7 @@ extern "C" {
 #define CHEST_RUN_BEFORE_EACH(c, fn) chest_set_before_each((c), (fn))
 #define CHEST_RUN_AFTER_EACH(c, fn) chest_set_after_each((c), (fn))
 
-#define RUN_ALL(...)                                                           \
+#define CHEST_RUN_ALL(...)                                                     \
   int main(void) {                                                             \
     chest_t *c = chest_init();                                                 \
     if (c == NULL)                                                             \

@@ -7,4 +7,4 @@ CHEST_TEST(numeric_assertions) {
   CHEST_COMPARE(c, GT, 10, 5);
 }
 
-RUN_ALL(CHEST_ADD(c, numeric_assertions););
+CHEST_RUN_ALL(CHEST_ADD(c, numeric_assertions););

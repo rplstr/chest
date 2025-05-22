@@ -5,4 +5,4 @@ CHEST_TEST(float_assertions) {
   CHEST_FPEQ(c, 0.1 + 0.2, 0.3, 1e-6);
 }
 
-RUN_ALL(CHEST_ADD(c, float_assertions););
+CHEST_RUN_ALL(CHEST_ADD(c, float_assertions););

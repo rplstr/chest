@@ -8,4 +8,4 @@ CHEST_TEST(memory_assertions) {
   CHEST_EQUAL(c, arr1, arr2);
 }
 
-RUN_ALL(CHEST_ADD(c, memory_assertions););
+CHEST_RUN_ALL(CHEST_ADD(c, memory_assertions););

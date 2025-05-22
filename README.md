@@ -18,7 +18,7 @@ Single-header C99 testing framework for unit tests.
    ```
 4. Register and run tests:
    ```c
-   RUN_ALL(
+   CHEST_RUN_ALL(
        CHEST_ADD(c, addition);
        // CHEST_ADD(c, another_test);
    );
