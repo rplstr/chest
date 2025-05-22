@@ -168,28 +168,28 @@ extern "C" {
 #define OPSTR_EQ "=="
 #define OPSTR_NE "!="
 
-#define assertcmp(ctx, op, A, B)                                               \
-  chest_assert_cmp((ctx), op, (long double)(A), (long double)(B),              \
-                   #A " " OPSTR_##op " " #B, __FILE__, __LINE__)
+#define CHEST_COMPARE(ctx, op, A, B)                                           \
+  chest_assert_compare((ctx), op, (long double)(A), (long double)(B),          \
+                       #A " " OPSTR_##op " " #B, __FILE__, __LINE__)
 
-#define memeq(ctx, X, Y)                                                       \
+#define CHEST_EQUAL(ctx, X, Y)                                                 \
   chest_memeq((ctx), &(X), &(Y), sizeof(X), #X " == " #Y, __FILE__, __LINE__)
 
-#define fpeq(ctx, A, B, tol)                                                   \
+#define CHEST_FPEQ(ctx, A, B, tol)                                             \
   chest_fpeq((ctx), (long double)(A), (long double)(B), (long double)(tol),    \
              #A " ≈ " #B, __FILE__, __LINE__)
 
-#define streq(ctx, A, B)                                                       \
+#define CHEST_STREQ(ctx, A, B)                                                 \
   chest_streq((ctx), (A), (B), #A " == " #B, __FILE__, __LINE__)
 
-#define TEST(name) static void name(chest_t *c)
+#define CHEST_TEST(name) static void name(chest_t *c)
 
-#define ADDTEST(c, name) chest_addtest(c, name, #name)
+#define CHEST_ADD(c, name) chest_add(c, name, #name)
 
-#define RUN_BEFORE(c, fn) chest_set_before_all((c), (fn))
-#define RUN_AFTER(c, fn) chest_set_after_all((c), (fn))
-#define RUN_BEFORE_EACH(c, fn) chest_set_before_each((c), (fn))
-#define RUN_AFTER_EACH(c, fn) chest_set_after_each((c), (fn))
+#define CHEST_RUN_BEFORE(c, fn) chest_set_before_all((c), (fn))
+#define CHEST_RUN_AFTER(c, fn) chest_set_after_all((c), (fn))
+#define CHEST_RUN_BEFORE_EACH(c, fn) chest_set_before_each((c), (fn))
+#define CHEST_RUN_AFTER_EACH(c, fn) chest_set_after_each((c), (fn))
 
 #define RUN_ALL(...)                                                           \
   int main(void) {                                                             \
@@ -229,7 +229,7 @@ typedef enum chest_error_e {
 } chest_error_t;
 
 /**
- * Comparison operators for assertcmp
+ * Comparison operators for CHEST_COMPARE
  */
 typedef enum chest_cmp_op_e {
   CHEST_CMP_LT,
@@ -371,14 +371,14 @@ static inline void chest_report(chest_t *c, const char *name, size_t name_len,
 }
 
 /**
- * chest_addtest — register a test function
+ * chest_add — register a test function
  * @c:    test context (non-NULL)
  * @fn:   test function pointer
  * @name: test name string
  * @return: CHEST_OK on success or CHEST_ERR_INTERNAL on error
  */
-static inline chest_error_t chest_addtest(chest_t *c, testfn_t fn,
-                                          const char *name) {
+static inline chest_error_t chest_add(chest_t *c, testfn_t fn,
+                                      const char *name) {
   if (!c || !fn || !name)
     return CHEST_ERR_INTERNAL;
   /* grow arrays safely */
@@ -691,12 +691,12 @@ static inline chest_error_t chest_streq(chest_t *c, const char *A,
 }
 
 /**
- * chest_assert_cmp — generic numeric comparison assertion
+ * chest_assert_compare — generic numeric comparison assertion
  */
-static inline chest_error_t chest_assert_cmp(chest_t *c, chest_cmp_op_t op,
-                                             long double A, long double B,
-                                             const char *expr, const char *file,
-                                             int line) {
+static inline chest_error_t chest_assert_compare(chest_t *c, chest_cmp_op_t op,
+                                                 long double A, long double B,
+                                                 const char *expr,
+                                                 const char *file, int line) {
   chest_error_t res = CHEST_ERR_INTERNAL;
   bool ok = false;
   if (c != NULL) {

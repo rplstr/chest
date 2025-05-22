@@ -1,10 +1,10 @@
 
 #include "chest.h"
 
-TEST(numeric_assertions) {
-  assertcmp(c, EQ, 2 + 2, 4);
-  assertcmp(c, LT, -5, 0);
-  assertcmp(c, GT, 10, 5);
+CHEST_TEST(numeric_assertions) {
+  CHEST_COMPARE(c, EQ, 2 + 2, 4);
+  CHEST_COMPARE(c, LT, -5, 0);
+  CHEST_COMPARE(c, GT, 10, 5);
 }
 
-RUN_ALL(ADDTEST(c, numeric_assertions););
+RUN_ALL(CHEST_ADD(c, numeric_assertions););

@@ -12,15 +12,15 @@ Single-header C99 testing framework for unit tests.
    ```
 3. Write tests:
    ```c
-   TEST(addition) {
-       assertcmp(c, EQ, 2 + 3, 5);
+   CHEST_TEST(addition) {
+       CHEST_COMPARE(c, EQ, 2 + 3, 5);
    }
    ```
 4. Register and run tests:
    ```c
    RUN_ALL(
-       ADDTEST(c, addition);
-       // ADDTEST(c, another_test);
+       CHEST_ADD(c, addition);
+       // CHEST_ADD(c, another_test);
    );
    ```
 
