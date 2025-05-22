@@ -585,8 +585,8 @@ static inline chest_error_t chest_memeq(chest_t *c, const void *A,
   size_t w = sizeof(uintptr_t);
 
   if (c != NULL) {
-    const uint8_t *a = (const uint8_t *)A;
-    const uint8_t *b = (const uint8_t *)B;
+    const u8 *a = (const u8 *)A;
+    const u8 *b = (const u8 *)B;
 
     for (; (i + w) <= N; i += w) {
       uintptr_t va = 0U;
